@@ -27,8 +27,7 @@ public class ListViewActivity extends Activity{
     private String[] times = {
             "4:30","4:16","5:01","4:33","4:29",
             "5:20","4:56","4:26","4:53","4:37",
-            "4:38","4:45","5:08","4:31","4:48"
-    };
+            "4:38","4:45","5:08","4:31","4:48"};
     private int[] ids = {R.drawable.beautifulgirls,R.drawable.hero,R.drawable.letitbe,R.drawable.una,R.drawable.bluenight,
             R.drawable.sayitright,R.drawable.pretty,R.drawable.rightherewaiting,R.drawable.therose,R.drawable.whatareword,
             R.drawable.bairi,R.drawable.huiyid,R.drawable.houhui,R.drawable.leidegao,R.drawable.jimode};
@@ -52,7 +51,6 @@ public class ListViewActivity extends Activity{
     class MyAdapter extends BaseAdapter {
         private int selected = -1;
         @Override
-        //获得绘制次数
         public int getCount(){
             return titles.length;
         }
@@ -68,11 +66,11 @@ public class ListViewActivity extends Activity{
             return position;
         }
         @Override
-        //
         public View getView(int position,View convertView,ViewGroup list){
             View v;
             LayoutInflater layoutInflater = ListViewActivity.this.getLayoutInflater();
-            if(convertView!=null){
+            if(convertView!=null)
+            {
                 v = convertView;
             }
             else
@@ -84,15 +82,16 @@ public class ListViewActivity extends Activity{
             TextView tv_item_abstract = (TextView)v.findViewById(R.id.tv_item_abstract);
             TextView tv_item_date = (TextView)v.findViewById(R.id.tv_item_date);
             ImageView iv_item_pic = (ImageView)v.findViewById(R.id.iv_item_pic);
-           // TextView tv_item_arrow = (TextView)v.findViewById(R.id.tv_item_arrow);
             tv_item_title.setText(titles[position]);
             tv_item_abstract.setText(abstracts[position]);
             tv_item_date.setText(times[position]);
             iv_item_pic.setImageResource(ids[position]);
-            if(position==selected){
+            if(position==selected)
+            {
                 item.setBackgroundColor(Color.argb(150, 20, 212, 227));
             }
-            else {
+            else
+            {
                 item.setBackgroundColor(Color.argb(0,255,255,255));
             }
             return v;
