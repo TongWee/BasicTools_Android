@@ -13,7 +13,6 @@
         android:layout_height="80dp"
         android:layout_gravity="center_vertical"
         android:background="#ffffff"
-        android:contentDescription="@string/coverImg"
         android:padding="4px"
         />
 <GridLayout android:layout_width="wrap_content"
