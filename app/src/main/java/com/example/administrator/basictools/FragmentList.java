@@ -1,7 +1,11 @@
 package com.example.administrator.basictools;
 
+
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.app.ListFragment;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -18,6 +22,8 @@ import android.widget.TextView;
  */
 public class FragmentList extends ListFragment {
     private MyAdapter myadapter;
+    private FragmentManager fragmentManager;
+    private FragmentTransaction fragmentTransaction;
     private String [] titles = {"Beautiful Girls","Hero","Let It Be","UnaMattina","Blue Night",
             "Say It Right","Pretty","Right Here Waiting","The Rose","What Are Words",
             "白日梦蓝","回忆的阁楼","后会无期","泪的告白","寂寞的季节"};
@@ -37,12 +43,30 @@ public class FragmentList extends ListFragment {
         super.onCreate(savedInstanceState);
         myadapter = new MyAdapter(getActivity());
         setListAdapter(myadapter);
+        fragmentManager = getFragmentManager();
     }
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
         myadapter.setSelect(position);
         myadapter.notifyDataSetChanged();
+        fragmentTransaction = fragmentManager.beginTransaction();
+        DetailFragment detailFragment = new DetailFragment();
+
+        Bundle bundle = new Bundle();
+        bundle.putString("title",titles[position]);
+        bundle.putString("abstract",abstracts[position]);
+        bundle.putString("time",times[position]);
+        bundle.putInt("pic",ids[position]);
+
+        detailFragment.setArguments(bundle);
+        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+        if(this.getResources().getConfiguration().orientation== Configuration.ORIENTATION_PORTRAIT)
+            fragmentTransaction.replace(R.id.left,detailFragment);
+        else
+            fragmentTransaction.replace(R.id.right,detailFragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
     }
     static class ViewHolder{
         public GridLayout _item;
@@ -73,7 +97,7 @@ public class FragmentList extends ListFragment {
         public void setSelect(int position){this.selected = position;}
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            ViewHolder viewHolder=null;
+            ViewHolder viewHolder;
             if(convertView==null)
             {
                 viewHolder = new ViewHolder();
@@ -84,14 +108,6 @@ public class FragmentList extends ListFragment {
                 viewHolder._date = (TextView)convertView.findViewById(R.id.tv_item_date);
                 viewHolder._pic = (ImageView)convertView.findViewById(R.id.iv_item_pic);
                 convertView.setTag(viewHolder);
-                if(position==selected)
-                {
-                    viewHolder._item.setBackgroundColor(Color.argb(150, 20, 212, 227));
-                }
-                else
-                {
-                    viewHolder._item.setBackgroundColor(Color.argb(0,255,255,255));
-                }
             }
             else
             {
@@ -101,6 +117,14 @@ public class FragmentList extends ListFragment {
             viewHolder._abstract.setText(abstracts[position]);
             viewHolder._date.setText(times[position]);
             viewHolder._pic.setImageResource(ids[position]);
+            if(position==selected)
+            {
+                viewHolder._item.setBackgroundColor(Color.argb(150, 20, 212, 227));
+            }
+            else
+            {
+                viewHolder._item.setBackgroundColor(Color.argb(0,255,255,255));
+            }
             return convertView;
         }
     }
