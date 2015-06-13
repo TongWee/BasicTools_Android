@@ -1,6 +1,7 @@
 package com.example.administrator.basictools.Service;
 
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.IBinder;
@@ -30,11 +31,13 @@ public class BackgroundMusic extends Service{
 
     @Override
     public IBinder onBind(Intent intent) {
+
         return null;
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        if(intent != null){
         int action = intent.getIntExtra("musicAction",-1);
         Log.v("service action:    ", String.valueOf(action) );
         switch (action){
@@ -66,6 +69,8 @@ public class BackgroundMusic extends Service{
                 break;
             default:
                 break;
+        }
+
         }
 
         return super.onStartCommand(intent, flags, startId);
