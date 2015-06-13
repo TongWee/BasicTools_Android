@@ -55,4 +55,4 @@
             android:textColor="#ff8c8c8c"
             android:textSize="28sp" />
     </GridLayout>
-    </GridLayout>
+</GridLayout>
